@@ -27,6 +27,25 @@
             --accent: #0a0a0a;
         }
 
+        <script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const SUPABASE_URL = "https://lvkloakpuuyxkbxbkmsz.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2a2xvYWtwdXV5eGtieGJrbXN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjE1ODcsImV4cCI6MjA3NzM5NzU4N30.Hy0pEm6qGNh6fxXVg6RsN14tzxHsoPtNezvJeeu-LuY";
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function loadProjects() {
+  const { data, error } = await supabase.from("projects").select("*");
+  if (error) return console.error(error);
+  const container = document.getElementById("projectsContainer");
+  container.innerHTML = data.map(
+    p => `<div class='project-card'><h3>${p.title}</h3><p>${p.description}</p></div>`
+  ).join("");
+}
+loadProjects();
+</script>
+
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--white);
